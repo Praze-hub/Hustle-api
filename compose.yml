@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+
+
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER= postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - .:/Hustle
+    networks:
+      - hustle
+    depends_on:
+      - postgres_db
+      - redis
+
+  postgres_db:
+    image: postgres:latest
+    container_name: app_hustle_db
+    restart: always
+    environment:
+      - POSTGRES_DB=hustle
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - '5435:5432'
+    volumes:
+      - ./data/postgres_db:/var/lib/postgresql/data
+    networks:
+      - hustle
+
+  redis:
+    image: redis:latest
+    container_name: app2_redis
+    restart: always
+    ports:
+      - '6380:6379'
+    networks:
+      - hustle
+
+  celery:
+    build: .
+    command: celery -A core worker --loglevel=info 
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    volumes:
+      - .:/core
+    depends_on:
+      - redis
+    networks:
+      - hustle
+
+
+networks:
+  hustle:
+    external: true
+
+volumes:
+  postgres_db:
+    driver: local
