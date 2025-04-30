@@ -9,5 +9,7 @@ psycopg2==2.9.10
 celery==5.4.0
 redis==5.0.4
 Pillow==10.3.0
-
+djangorestframework-simplejwt==5.3.1
+django-cors-headers==4.3.1 
+django-anymail==10.1
 
