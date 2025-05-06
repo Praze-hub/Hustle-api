@@ -7,6 +7,9 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/customuser/', include('customuser.urls')),
+    # path('auth/', include('dj_rest_auth.urls')),
+    # path('auth/registration/', include('dj_rest_auth.registration.urls')),
+    # path('auth/social/', include('allauth.socialaccount.urls')),
 ]
 
 if settings.DEBUG:
