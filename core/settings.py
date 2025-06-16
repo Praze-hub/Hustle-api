@@ -49,9 +49,12 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'dj_rest_auth',
     'dj_rest_auth.registration',
+    'drf_yasg',
     
     #custom app
     'customuser',
+    'socialauth',
+    'portfolio',
 ]
 
 MIDDLEWARE = [
@@ -170,3 +173,20 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '1095946566976-i3ot4v127lm8jl013e6fri7qbtb41kcc.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
