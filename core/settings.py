@@ -126,6 +126,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': [
@@ -177,11 +181,11 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': '1095946566976-i3ot4v127lm8jl013e6fri7qbtb41kcc.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': env("CLIENT_ID"),
+            'secret': env("SECRET"),
             'key': ''
         },
-        'SCOPE': [
+        'SCOPE': [ 
             'profile',
             'email',
         ],
