@@ -6,6 +6,10 @@ from .serializers import ArtisanPortfolioSerializer, PortfolioImageSerializer, R
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
+from rest_framework import status
+
+
 
 
 class ArtisanPortfolioViewSet(viewsets.ModelViewSet):
@@ -70,7 +74,6 @@ class RatingViewSet(viewsets.ModelViewSet):
     @action(
         detail = False,
         methods = ['post'],
-        serializer_class = RatingSerializer,
         permission_classes = [IsAuthenticated],
         url_path='ratings',
     )
@@ -85,12 +88,9 @@ class RatingViewSet(viewsets.ModelViewSet):
         except ArtisanPortfolio.DoesNotExist:
             raise ValidationError({'artisan': 'Invalid artisan ID'})
         
-        #Limit only one rating per artisan per customer
-        existing_rating = Ratings.objects.filter(
-            artisan=artisan, customer=request.user).first()
-        
-        if existing_rating:
-            raise ValidationError("You have already rated this artisan.")
+        #Enforce uniqueness
+        if Ratings.objects.filter(artisan=artisan, customer=request.user).exists():
+            raise ValidationError({'detail': 'You have already rated this artisan'})
         
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import ArtisanPortfolio, PortfolioImage, Ratings
 
+
 class PortfolioImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PortfolioImage
@@ -9,11 +10,12 @@ class PortfolioImageSerializer(serializers.ModelSerializer):
         
 class RatingSerializer(serializers.ModelSerializer):
     customer = serializers.StringRelatedField(read_only=True)
+    # artisan = serializers.StringRelatedField(read_only=True) 
     
     class Meta:
         model = Ratings
-        fields = ['id', 'customer', 'rating', 'comment', 'created_at']
-
+        fields = ['id', 'customer','rating', 'comment', 'created_at']
+        
 class ArtisanPortfolioSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     images = PortfolioImageSerializer(many=True, read_only=True)
