@@ -8,6 +8,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticate
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework import status
+from django.db.models import Avg
+from .filters import ArtisanPortfolioFilter
 
 
 
@@ -16,7 +18,14 @@ class ArtisanPortfolioViewSet(viewsets.ModelViewSet):
     queryset = ArtisanPortfolio.objects.all()
     serializer_class = ArtisanPortfolioSerializer
     permission_classes = [IsAuthenticated]
-
+    filterset_class = ArtisanPortfolioFilter
+    search_fields = ['skills', 'location']
+    
+    def get_queryset(self):
+        return ArtisanPortfolio.objects.annotate(
+            avg_rating=Avg('reviews__rating')
+        )
+    
     
     @action(
         detail = False,
@@ -97,6 +106,4 @@ class RatingViewSet(viewsets.ModelViewSet):
         serializer.save(customer=request.user, artisan=artisan)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-  
-
         

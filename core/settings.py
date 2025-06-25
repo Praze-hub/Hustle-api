@@ -50,11 +50,13 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'dj_rest_auth.registration',
     'drf_yasg',
+    'django_filters',
     
     #custom app
     'customuser',
     'socialauth',
     'portfolio',
+    
 ]
 
 MIDDLEWARE = [
@@ -140,6 +142,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend',
+                                'rest_framework.filters.SearchFilter'],
 }
 
 SIMPLE_JWT = {
