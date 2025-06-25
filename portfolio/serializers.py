@@ -10,7 +10,6 @@ class PortfolioImageSerializer(serializers.ModelSerializer):
         
 class RatingSerializer(serializers.ModelSerializer):
     customer = serializers.StringRelatedField(read_only=True)
-    # artisan = serializers.StringRelatedField(read_only=True) 
     
     class Meta:
         model = Ratings
