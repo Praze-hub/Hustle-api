@@ -1,4 +1,4 @@
-# ArtisanConnect API
+# Hustle API
 
 A Django REST Framework-based backend for connecting skilled artisans (tailors, barbers, etc.) with potential customers. The platform allows artisans to showcase their skills through portfolios and allows customers to search, rate, and connect with artisans based on location, skill, and quality.
 
@@ -6,7 +6,7 @@ A Django REST Framework-based backend for connecting skilled artisans (tailors, 
 
 ## 🚀 Project Idea
 
-Many skilled workers struggle to gain visibility and access to customers. **ArtisanConnect** solves this by allowing artisans to:
+Many skilled workers struggle to gain visibility and access to customers. **Hustle** solves this by allowing artisans to:
 
 - Create a profile and portfolio showcasing their work
 - Upload images of completed jobs
