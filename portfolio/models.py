@@ -6,6 +6,14 @@ class ArtisanPortfolio(models.Model):
     full_name = models.CharField(max_length=100)
     skills = models.TextField(help_text="skills e.g.,  tailoring, haircut")
     location = models.CharField(max_length=100)
+    whatsapp_link = models.URLField(blank=True, null=True)
+    
+    def save(self, *args, **kwargs):
+        #Automatically generate Whatsapp link if not set
+        if not self.whatsapp_link and self.user.phone_number:
+            phone = self.user.phone_number.replace('+', '').replace(' ', '')
+            self.whatsapp_link = f"https://wa.me/{phone}"
+        super().save(*args, **kwargs)
     
     def __str__(self):
         return self.full_name

@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'customuser',
     'socialauth',
     'portfolio',
+    'booking',
     
 ]
 
