@@ -32,36 +32,36 @@ class BookingViewSet(viewsets.ModelViewSet):
                 
         return base_queryset
     
-    # @action(
-    #     detail=True,
-    #     methods=['post'],
-    #     url_path='accept'
-    # )
-    # def accept_booking(self, request, pk=None):
-    #     booking = self.get_object()
-    #     booking.accept()
-    #     return Response({'status': 'Booking Accepted'}, status=status.HTTP_202_ACCEPTED)
+    @action(
+        detail=True,
+        methods=['post'],
+        url_path='accept'
+    )
+    def accept_booking(self, request, pk=None):
+        booking = self.get_object()
+        booking.accept()
+        return Response({'status': 'Booking Accepted'}, status=status.HTTP_200_OK)
     
     
-    # @action(
-    #     detail=True,
-    #     methods=['post'],
-    #     url_path='decline'
-    # )
-    # def decline_booking(self, request, pk=None):
-    #     booking = self.get_object()
-    #     booking.decline()
-    #     return Response({'status': 'Booking Declined'}, status=status.HTTP_200_OK)
+    @action(
+        detail=True,
+        methods=['post'],
+        url_path='decline'
+    )
+    def decline_booking(self, request, pk=None):
+        booking = self.get_object()
+        booking.decline()
+        return Response({'status': 'Booking Declined'}, status=status.HTTP_200_OK)
     
-    # @action(
-    #     detail=True,
-    #     methods=['post'],
-    #     url_path='pending'
-    # )
-    # def pending(self, request, pk=None):
-    #     booking = self.get_object()
-    #     booking.pending()
-    #     return Response({'status': 'Booking Pending'}, status=status.HTTP_102_PROCESSING)
+    @action(
+        detail=True,
+        methods=['post'],
+        url_path='pending'
+    )
+    def pending(self, request, pk=None):
+        booking = self.get_object()
+        booking.pending()
+        return Response({'status': 'Booking Pending'}, status=status.HTTP_200_OK)
         
 
         

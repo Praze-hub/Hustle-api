@@ -20,9 +20,9 @@ class Booking(models.Model):
         
     def accept(self):
         self.status = BookingStatus.ACCEPTED.value
-        self.status()
+        self.save()
         
     def decline(self):
         self.status = BookingStatus.DECLINED.value
-        self.status()
+        self.save()
 
