@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Avg
 from .filters import ArtisanPortfolioFilter
+from django.db.models import Q
 
 
 
@@ -39,7 +40,38 @@ class ArtisanPortfolioViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save(user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    @action(
+        detail=False,
+        methods=['get'],
+        permission_classes=[IsAuthenticated],
+        url_path='recommendations'
+    )
+    def recommend_artisans(self, request):
+        user = request.user
+        location = (user.address or '').strip()
+        skill_query = request.query_params.get('skill', '').strip().lower()
         
+        if not location and not skill_query:
+            return Response({'detail': 'Please provide either location or skill to search.'}, status=400)
+        
+        #Extract the particular city or state from the address
+        location_query = location.split(',')[-1].strip().lower() if ',' in location else location.lower()
+        
+        queryset = ArtisanPortfolio.objects.all()
+        
+        if location_query:
+            queryset = queryset.filter(location__icontains=location_query)
+            
+        if skill_query:
+            queryset = queryset.filter(skills__icontains=skill_query)
+            
+        queryset = queryset.distinct()        
+        
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+    
+    
 class PortfolioImageViewSet(viewsets.ModelViewSet):
     queryset = PortfolioImage.objects.all()
     serializer_class = PortfolioImageSerializer
@@ -106,4 +138,5 @@ class RatingViewSet(viewsets.ModelViewSet):
         serializer.save(customer=request.user, artisan=artisan)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-        
+    
+    
