@@ -24,7 +24,6 @@ Many skilled individuals lack visibility and customer reach. This platform aims 
 | **Simple JWT** | Authentication |
 | **PostgreSQL** | Database |
 | **Django AllAuth + dj-rest-auth** | Social & email authentication |
-| Email verification |
 | **django-cors-headers** | CORS handling for frontend |
 | **Cloudinary / local uploads** | Image hosting (configurable) |
 
