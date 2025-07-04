@@ -1,74 +1,72 @@
-# Hustle API
+# 🛠️ Hustle API
 
-A Django REST Framework-based backend for connecting skilled artisans (tailors, barbers, etc.) with potential customers. The platform allows artisans to showcase their skills through portfolios and allows customers to search, rate, and connect with artisans based on location, skill, and quality.
-
----
-
-## 🚀 Project Idea
-
-Many skilled workers struggle to gain visibility and access to customers. **Hustle** solves this by allowing artisans to:
-
-- Create a profile and portfolio showcasing their work
-- Upload images of completed jobs
-- Receive customer ratings and reviews
-
-Customers can:
-
-- Search and filter artisans by location, skill, and rating
-- View artisan portfolios
-- Submit feedback and ratings
+A Django-based backend API that helps **artisans** (tailors, barbers, carpenters, etc.) showcase their skills and connect with **customers** looking for trusted service providers.
 
 ---
 
-## 🔧 Technologies Used
+## 🚀 Project Overview
 
-### 💻 Backend
-- **Python 3.8+**
-- **Django 4.x**
-- **Django REST Framework (DRF)**
-- **SimpleJWT** – Token-based authentication
-- **dj-rest-auth + allauth** – For social login (Google, Facebook, Twitter)
-- **PostgreSQL** – Relational database
-- **django-cors-headers** – CORS handling for frontend/backend integration
-- **Pillow** – Image uploads
-- **django-filter** – Advanced filtering
+Many skilled individuals lack visibility and customer reach. This platform aims to:
+
+- Let artisans create portfolios to show off past work.
+- Allow customers to find artisans by **skill, location, and rating**.
+- Enable service **booking and WhatsApp communication**.
+- Provide **star rating/reviews** from verified customers.
 
 ---
 
-## 📦 Features & Implementation
+## 🧰 Tech Stack
 
-### ✅ User Authentication
-- Custom user model using email as username
-- JWT-based login, logout, registration
-- Email verification on signup
-- Social login with Google (others configurable)
+| Tool/Framework | Purpose |
+|----------------|---------|
+| **Django** | Web framework |
+| **Django REST Framework (DRF)** | API development |
+| **Simple JWT** | Authentication |
+| **PostgreSQL** | Database |
+| **Django AllAuth + dj-rest-auth** | Social & email authentication |
+| Email verification |
+| **django-cors-headers** | CORS handling for frontend |
+| **Cloudinary / local uploads** | Image hosting (configurable) |
+
+---
+
+## 🧑‍💻 Features & Implementation
+
+### ✅ Custom User Authentication
+- Users sign up with email, password, phone number.
+- JWT-based login, logout, and email verification.
+- User types: `ARTISAN` and `CUSTOMER`.
 
 ### ✅ Artisan Portfolio
-- Artisans can register and create a portfolio
-- Portfolios include name, location, skill, and image uploads
-- Customers can view artisan portfolios
-- File uploads handled with `MultiPartParser` and `ImageField`
+- Artisans create a portfolio linked to their user.
+- Upload images of previous jobs.
+- Auto-generate WhatsApp contact link from phone number.
+- View portfolio includes:
+  - Full name, skills, location, profile images, reviews.
 
-### ✅ Ratings and Reviews
-- Customers can rate artisans (1–5 stars) and leave a comment
-- Each customer can rate an artisan only once (`unique_together` constraint)
-- Average rating is calculated and displayed on artisan profiles
+### ✅ Image Uploads
+- DRF with `MultiPartParser` and `FormParser` for image fields.
+- PortfolioImage model linked to ArtisanPortfolio.
 
-### ✅ Search & Filter
-- Customers can:
-  - Search artisans by `skills`, `location`
-  - Filter by minimum rating (`min_rating`)
-- Implemented using `django-filter`, `SearchFilter`, and `OrderingFilter`
+### ✅ Ratings System
+- Only **authenticated customers** can rate artisans.
+- Limit: One rating per customer per artisan.
+- Average rating and reviews displayed on artisan profile.
 
-### ✅ API Documentation
-- Swagger or DRF's browsable API for testing endpoints
+### ✅ Search & Filtering
+- Customers can search by `skills`, `location`, or rating via query params.
+- Powered by DRF’s `SearchFilter` and custom filtering in views.
+
+### ✅ Booking & Communication
+- Customers can request service from an artisan.
+- Artisan can accept or decline.
+- Contact handled through WhatsApp link for now (no in-app messaging).
 
 ---
 
-## 🛠 Setup & Run
+## ⚙️ Local Setup Instructions
 
-1. Clone the repo:
-
+1. **Clone the repo**
    ```bash
-   git clone https://github.com/yourusername/artisanconnect-api.git
-   cd artisanconnect-api
+   git clone https://github.com/your-username/artisan-connect.git
+   cd artisan-connect
