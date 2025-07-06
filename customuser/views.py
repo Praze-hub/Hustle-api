@@ -10,9 +10,11 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import AccessToken
 from django.utils.encoding import smart_str
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.core.mail import send_mail
+from .serializers import RegisterSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer 
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
 
-
-from .serializers import RegisterSerializer
 
 CustomUser = get_user_model()
 
@@ -46,6 +48,22 @@ class VerifyEmail(APIView):
         except Exception as e:
             return Response({'error': 'Invalid token or user'}, status=status.HTTP_400_BAD_REQUEST)
         
+class PasswordResetRequestView(generics.GenericAPIView):
+    serializer_class = PasswordResetRequestSerializer
+    
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'message': 'Password reset link sent to your email.'}, status=status.HTTP_200_OK)
+    
+class PasswordResetConfirmView(generics.GenericAPIView):
+    serializer_class = PasswordResetConfirmSerializer
+    
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'message': 'Password has been reset successfully'}, status=status.HTTP_200_OK)
         
-
-        
+ 
