@@ -5,6 +5,10 @@ WORKDIR /Hustle
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
-RUN python manage.py collectstatic --noinput
+COPY . .
 
-CMD gunicorn your_project.wsgi:application --bind 0.0.0.0:$PORT
+EXPOSE 8000
+
+# RUN python manage.py collectstatic --noinput
+
+CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000"]
