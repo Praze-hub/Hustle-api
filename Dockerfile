@@ -21,7 +21,7 @@ COPY . .
 RUN mkdir -p /Hustle/staticfiles
 
 
-RUN python manage.py collectstatic --noinput
+# RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 
