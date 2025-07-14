@@ -103,14 +103,15 @@ REST_AUTH_TOKEN_MODEL = None
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': env('DATABASES_DEFAULT_ENGINE'),
-        'NAME': env('DATABASES_DEFAULT_NAME'),
-        'USER': env('DATABASES_DEFAULT_USER'),
-        'PASSWORD': env('DATABASES_DEFAULT_PASSWORD'),
-        'HOST': env('DATABASES_DEFAULT_HOST'),
-        'PORT': env('DATABASES_DEFAULT_PORT'),
-    }
+    # 'default': {
+    #     'ENGINE': env('DATABASES_DEFAULT_ENGINE'),
+    #     'NAME': env('DATABASES_DEFAULT_NAME'),
+    #     'USER': env('DATABASES_DEFAULT_USER'),
+    #     'PASSWORD': env('DATABASES_DEFAULT_PASSWORD'),
+    #     'HOST': env('DATABASES_DEFAULT_HOST'),
+    #     'PORT': env('DATABASES_DEFAULT_PORT'),
+    # }
+    'default': env.db()
 }
 
 
