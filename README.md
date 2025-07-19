@@ -1,71 +1,90 @@
-# 🛠️ Hustle API
+# Hustle 🛠️ – Connect Artisans with Customers
 
-A Django-based backend API that helps **artisans** (tailors, barbers, carpenters, etc.) showcase their skills and connect with **customers** looking for trusted service providers.
+**Hustle** is a platform that empowers local artisans (e.g., tailors, barbers, mechanics) to showcase their work online through personalized portfolios. Customers can easily find and hire trusted artisans in their area. Built with Django Rest Framework and PostgreSQL, containerized using Docker, and deployed on Render.
 
 ---
 
-## 🚀 Project Overview
+## 🧠 Problem Statement
 
-Many skilled individuals lack visibility and customer reach. This platform aims to:
+Many artisans in underserved communities lack digital visibility, while customers find it hard to locate reliable service providers. **Hustle** bridges this gap by:
+- Giving artisans a professional online presence.
+- Allowing customers to discover artisans based on skills and location.
+- Building transparency and trust through ratings and portfolios.
 
-- Let artisans create portfolios to show off past work.
-- Allow customers to find artisans by **skill, location, and rating**.
-- Enable service **booking and WhatsApp communication**.
-- Provide **star rating/reviews** from verified customers.
+---
+
+## 🌟 Features
+
+### 🧑‍🎨 For Artisans
+- Create profile and upload service portfolio
+- Add proof of work (images)
+- Receive star ratings and reviews
+- Secure authentication
+
+### 👥 For Customers
+- Search artisans by location and service
+- View artisan profiles and ratings
+- Rate and review artisans
+
+### ⚙️ Tech/Admin
+- API-first architecture with Django Rest Framework
+- Admin interface via Django admin
+- Dockerized setup with PostgreSQL database
+- Render deployment with CI/CD
+- Static/media file management
 
 ---
 
 ## 🧰 Tech Stack
 
-| Tool/Framework | Purpose |
-|----------------|---------|
-| **Django** | Web framework |
-| **Django REST Framework (DRF)** | API development |
-| **Simple JWT** | Authentication |
-| **PostgreSQL** | Database |
-| **Django AllAuth + dj-rest-auth** | Social & email authentication |
-| **django-cors-headers** | CORS handling for frontend |
-| **Cloudinary / local uploads** | Image hosting (configurable) |
+| Layer          | Technology                     |
+|----------------|-------------------------------|
+| Backend        | Django, Django Rest Framework |
+| Database       | PostgreSQL                    |
+| Deployment     | Render + Docker               |
+| Auth           | JWT / Token-based auth        |
+| API Docs       | Swagger / DRF-YASG            |
+| Env Mgmt       | `python-decouple` / `environ` |
 
 ---
 
-## 🧑‍💻 Features & Implementation
+## 🐳 Docker Setup
 
-### ✅ Custom User Authentication
-- Users sign up with email, password, phone number.
-- JWT-based login, logout, and email verification.
-- User types: `ARTISAN` and `CUSTOMER`.
+### Dockerfile
+```dockerfile
+FROM python:3.8-slim
+ENV PYTHONUNBUFFERED=1
 
-### ✅ Artisan Portfolio
-- Artisans create a portfolio linked to their user.
-- Upload images of previous jobs.
-- Auto-generate WhatsApp contact link from phone number.
-- View portfolio includes:
-  - Full name, skills, location, profile images, reviews.
+WORKDIR /Hustle
 
-### ✅ Image Uploads
-- DRF with `MultiPartParser` and `FormParser` for image fields.
-- PortfolioImage model linked to ArtisanPortfolio.
+RUN apt-get update && apt-get install -y \
+    build-essential libpq-dev libffi-dev gcc python3-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-### ✅ Ratings System
-- Only **authenticated customers** can rate artisans.
-- Limit: One rating per customer per artisan.
-- Average rating and reviews displayed on artisan profile.
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
-### ✅ Search & Filtering
-- Customers can search by `skills`, `location`, or rating via query params.
-- Powered by DRF’s `SearchFilter` and custom filtering in views.
+COPY . .
 
-### ✅ Booking & Communication
-- Customers can request service from an artisan.
-- Artisan can accept or decline.
-- Contact handled through WhatsApp link for now (no in-app messaging).
+RUN mkdir -p /Hustle/staticfiles
+RUN python manage.py collectstatic --noinput
 
----
+EXPOSE 8000
 
-## ⚙️ Local Setup Instructions
+CMD ["sh", "-c", "gunicorn core.wsgi:application --bind 0.0.0.0:8000"]
 
-1. **Clone the repo**
-   ```bash
-   git clone https://github.com/your-username/artisan-connect.git
-   cd artisan-connect
+## Project structure
+Hustle/
+├── core/
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── users/
+├── artisans/
+├── media/         # Uploaded images
+├── staticfiles/   # Collected static files
+├── templates/
+├── Dockerfile
+├── requirements.txt
+└── manage.py
+
