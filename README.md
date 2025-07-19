@@ -50,29 +50,6 @@ Many artisans in underserved communities lack digital visibility, while customer
 
 ## 🐳 Docker Setup
 
-### Dockerfile
-```dockerfile
-FROM python:3.8-slim
-ENV PYTHONUNBUFFERED=1
-
-WORKDIR /Hustle
-
-RUN apt-get update && apt-get install -y \
-    build-essential libpq-dev libffi-dev gcc python3-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
-
-COPY . .
-
-RUN mkdir -p /Hustle/staticfiles
-RUN python manage.py collectstatic --noinput
-
-EXPOSE 8000
-
-CMD ["sh", "-c", "gunicorn core.wsgi:application --bind 0.0.0.0:8000"]
-
 ## Project structure
 Hustle/
 ├── core/
@@ -87,4 +64,11 @@ Hustle/
 ├── Dockerfile
 ├── requirements.txt
 └── manage.py
+
+## Setting up docker
+docker build -t hustle .
+docker run -p 8000:8000 hustle
+
+
+
 
