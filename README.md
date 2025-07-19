@@ -51,6 +51,7 @@ Many artisans in underserved communities lack digital visibility, while customer
 ## 🐳 Docker Setup
 
 ## Project structure
+```
 Hustle/
 ├── core/
 │   ├── settings.py
@@ -64,7 +65,7 @@ Hustle/
 ├── Dockerfile
 ├── requirements.txt
 └── manage.py
-
+```
 ## Setting up docker
 docker build -t hustle .
 docker run -p 8000:8000 hustle
