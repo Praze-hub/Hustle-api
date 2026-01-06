@@ -1,10 +1,10 @@
-# Hustle 🛠️ – Connect Artisans with Customers
+# Hustle  – Connect Artisans with Customers
 
 **Hustle** is a platform that empowers local artisans (e.g., tailors, barbers, mechanics) to showcase their work online through personalized portfolios. Customers can easily find and hire trusted artisans in their area. Built with Django Rest Framework and PostgreSQL, containerized using Docker, and deployed on Render.
 
 ---
 
-## 🧠 Problem Statement
+##  Problem Statement
 
 Many artisans in underserved communities lack digital visibility, while customers find it hard to locate reliable service providers. **Hustle** bridges this gap by:
 - Giving artisans a professional online presence.
@@ -13,20 +13,20 @@ Many artisans in underserved communities lack digital visibility, while customer
 
 ---
 
-## 🌟 Features
+##  Features
 
-### 🧑‍🎨 For Artisans
+### For Artisans
 - Create profile and upload service portfolio
 - Add proof of work (images)
 - Receive star ratings and reviews
 - Secure authentication
 
-### 👥 For Customers
+###  For Customers
 - Search artisans by location and service
 - View artisan profiles and ratings
 - Rate and review artisans
 
-### ⚙️ Tech/Admin
+###  Tech/Admin
 - API-first architecture with Django Rest Framework
 - Admin interface via Django admin
 - Dockerized setup with PostgreSQL database
@@ -35,7 +35,7 @@ Many artisans in underserved communities lack digital visibility, while customer
 
 ---
 
-## 🧰 Tech Stack
+##  Tech Stack
 
 | Layer          | Technology                     |
 |----------------|-------------------------------|
@@ -48,7 +48,7 @@ Many artisans in underserved communities lack digital visibility, while customer
 
 ---
 
-## 🐳 Docker Setup
+##  Docker Setup
 
 ## Project structure
 ```
